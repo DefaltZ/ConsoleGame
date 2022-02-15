@@ -1,0 +1,15 @@
+{
+  "name": "consolegame",
+  "version": "1.0.0",
+  "description": "console based javascript game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "D3FALT",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "terminal-kit": "^2.4.0"
+  }
+}
