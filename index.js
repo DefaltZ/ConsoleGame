@@ -78,8 +78,24 @@ term.singleColumnMenu(items1, function(error, response){
 		    process.exit()
 		})
 	} else {
-		term.cyan('No was selected!')
-		process.exit();
+		connection.query("SELECT PlayerName from player", function(err, rows, fields){
+			if(err) throw err;
+			console.log(rows);
+			readLine.question('Profile you want to continue on: ', selectedProfile => {
+				connection.query("SELECT PlayerName, bal, wallet from player where PlayerName='"+selectedProfile+"'", function(err, rows, fields){
+					if(err) throw err;
+					for(var i = 0; i < rows.length; i++){
+						for(obj of rows[i]){
+							stuff = "";
+							stuff += ('| ' + rows[i].PlayerName + ' | ' + rows[i].bal + ' | ' + rows[i].wallet);
+							more_stuff += stuff + "<BR>"
+							process.exit()
+						}
+					}
+				})
+			})
+		})
+
 	}
 })
 
