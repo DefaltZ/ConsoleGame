@@ -54,28 +54,12 @@ term.singleColumnMenu(items1, function(error, response){
 	if(response.selectedIndex === 0){
 		readLine.question('Enter player name:', info => {
 			const newPlayer = new Schema(0, 500, info)
-			var sql = "CREATE TABLE player(PlayerName varchar(20), bal int, wallet int)"
-			var sql2 = "INSERT INTO player VALUES ('"+info+"', 0, 500)"
-			connection.query(sql, function(err, result) {
-				if (connection.error === 'ER_TABLE_EXISTS_ERROR'){
-					console.log('table already exists')
-					connection.query(sql2, function(err, result){
-						if(err) throw err;
-						console.log('\nPlayer Profile created!')
-					})
-				} else{
-					connection.query(sql2, function(err, result){
-						if(err) throw err;
-						console.log('\n Player Profile created!')
-					})
-				}
-			})
 			term.white("New player info: \n")
 		    term.bgRed("player name: " + newPlayer.player + '\n')
 		    term.bgRed("Balance: " + newPlayer.bal + '\n')
 		    term.bgRed("Wallet: " + newPlayer.wallet + '\n')
 		    term.bgGreen("total: " + Schema.total())
-		    process.exit()
+			process.exit()
 		})
 	} else {
 		connection.query("SELECT PlayerName from player", function(err, rows, fields){
