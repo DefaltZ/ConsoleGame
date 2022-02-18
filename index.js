@@ -1,4 +1,5 @@
 var mysql = require('mysql')
+const Schema = require('./classes.js')
 var term = require('terminal-kit').terminal;
 const readLine = require('readline').createInterface({
 	input: process.stdin,
@@ -11,29 +12,6 @@ var connection = mysql.createConnection({
 	password: '',
 	database: 'user'
 })
-
-class Schema {
-	constructor(bal, wallet, player){
-		this.player = player;
-		this.bal = bal;
-		this.wallet = wallet;
-	}
-	player(){
-		return this.player;
-	}
-
-	bal(){
-		return this.bal;
-	}
-
-	wallet(){
-		return this.wallet;
-	}
-	static total(){
-		let total = this.bal + this.wallet
-		return total
-	}
-}
 
 connection.connect(function(err){
 	if(err) throw err;
@@ -62,20 +40,17 @@ term.singleColumnMenu(items1, function(error, response){
 			process.exit()
 		})
 	} else {
-		connection.query("SELECT PlayerName from player", function(err, rows, fields){
+		connection.query("SELECT PlayerName from player", function(err, result, fields){
 			if(err) throw err;
-			console.log(rows);
+			console.log(result);
 			readLine.question('Profile you want to continue on: ', selectedProfile => {
-				connection.query("SELECT PlayerName, bal, wallet from player where PlayerName='"+selectedProfile+"'", function(err, rows, fields){
+				connection.query("SELECT PlayerName, bal, wallet from player where PlayerName='"+selectedProfile+"'", function(err, result, fields){
 					if(err) throw err;
-					for(var i = 0; i < rows.length; i++){
-						for(obj of rows[i]){
-							stuff = "";
-							stuff += ('| ' + rows[i].PlayerName + ' | ' + rows[i].bal + ' | ' + rows[i].wallet);
-							more_stuff += stuff + "<BR>"
-							process.exit()
-						}
-					}
+					Object.keys(result).forEach(function(key){
+						var row = result[key];
+						console.log(row.PlayerName + ' | ' + row.bal + ' | ' + row.wallet + ' | ' + Schema.total())
+						process.exit()
+					})
 				})
 			})
 		})
