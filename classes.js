@@ -1,4 +1,6 @@
-export default class Schema {
+var term = require('terminal-kit').terminal;
+
+module.exports = class Schema {
 	constructor(bal, wallet, player){
 		this.player = player;
 		this.bal = bal;
@@ -20,27 +22,32 @@ export default class Schema {
 		return total
 	}
 	static work(){
-		let earnRange = Math.random() * (500 - 100) + 100;
-		return term.green(`you worked and earned ${earnRange} coins`) 
+		let earnRange = Math.round(Math.random() * (300 - 100) + 100)
+		term.green(`you worked and earned ${earnRange} coins`)
+		process.exit()
 	}
 	static pickpocket(){
-		let chance = Math.random() * (6 - 1) + 1;
+		let chance = Math.round(Math.random() * (6 - 1) + 1)
 		if(chance%2 == 0){
-			let pickpocketRange = Math.random() * (200 - 50) + 50;
-			return term.green(`You worked and earned ${pickpocketRange} coins`)
+			let pickpocketRange = Math.round(Math.random() * (200 - 50) + 50)
+			term.green(`You worked and earned ${pickpocketRange} coins`)
+			process.exit()
 		} else{
-			let lossRange = Math.random() * (100 - 50) + 50;
-			return term.green(`You were caught and lost ${lossRange} coins`)
+			let lossRange = Math.round(Math.random() * (100 - 50) + 50)
+			term.green(`You were caught and lost ${lossRange} coins`)
+			process.exit()
 		}
 	}
 	static invest(){
-		let returnChance = Math.random()* (6 - 1) + 1;
+		let returnChance = Math.round(Math.random()* (6 - 1) + 1)
 		if(returnChance%2 == 0){
-			let investReturn = Math.random() * (1000 - 500) + 50;
-			return term.green(`You invested and earned ${investReturn} coins`)
+			let investReturn = Math.round(Math.random() * (1000 - 500) + 50)
+			term.green(`You invested and earned ${investReturn} coins`)
+			process.exit()
 		} else {
-			let investLoss = Math.random() * (1000 - 500) + 50;
-			return term.green(`You invested and lost ${investLoss} coins`)
+			let investLoss = Math.round(Math.random() * (1000 - 500) + 50)
+			term.green(`You invested and lost ${investLoss} coins`)
+			process.exit()
 		}
 	}
 }
